@@ -1,0 +1,35 @@
+<h1 class="text-center mt-4"> Edit this article </h1>
+
+<% if @article.errors.any? %>
+   <h3>Following errors are preventing you from saving the article</h3>
+   <ul>
+      <% @article.errors.full_messages.each do |msg| %>
+         <li> <%= msg %> </li>
+      <% end %>
+   </ul>
+<% end %>
+
+<div class="row justify-content-center">
+   <div class="col-10">
+      <%= form_with(model: @article, local: true, data: { turbo: false }) do |f| %>
+         <div class="form-group row">
+            <%= f.label :title, class: "col-2 col-form-label text-light" %>
+            <div class="col-10">
+               <%= f.text_field :title, class: "form-control shadow rounded", placeholder: "Title of article"%>
+            </div>
+         </div>
+         <br>
+         <div class="form-group row">
+            <%= f.label :description, class: "col-2 col-form-label text-light" %>
+            <div class="col-10">
+               <%= f.text_area :description, rows: 10, class: "form-control shadow rounded", placeholder: "Description of article" %>
+            </div>
+         </div>
+         <br>
+         <div class="form-group row justify-content-center">
+            <%= f.submit class: "btn btn-outline-dark btn-lg col-2" %>
+         </div>
+      <% end %>
+   </div>
+</div>
+<%= link_to 'Return to articles listing', articles_path %> 
