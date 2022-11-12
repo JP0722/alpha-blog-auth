@@ -1,13 +1,6 @@
 <h1 class="text-center mt-4"> Edit this article </h1>
 
-<% if @article.errors.any? %>
-   <h3>Following errors are preventing you from saving the article</h3>
-   <ul>
-      <% @article.errors.full_messages.each do |msg| %>
-         <li> <%= msg %> </li>
-      <% end %>
-   </ul>
-<% end %>
+<%= render 'shared/errors', obj: @article %>
 
 <div class="row justify-content-center">
    <div class="col-10">

@@ -1,12 +1,14 @@
 class ArticlesController < ApplicationController
-
+    
+    before_action :set_article, only: [:show, :edit, :update, :destroy]
+	before_action :required_user, except: [:show, :index]
+	before_action :required_same_user, only: [:edit, :update, :destroy]
 
 	def show
-		@article = Article.find(params[:id])
 	end
 
 	def index
-		@articles = Article.all
+		@articles = Article.paginate(page: params[:page], per_page: 3)
 	end
 
 	def new
@@ -14,12 +16,11 @@ class ArticlesController < ApplicationController
 	end
 
 	def edit
-		@article = Article.find(params[:id])
 	end
 
 	def create
 		@article = Article.new(params.require(:article).permit(:title, :description))
-		@article.user_id = User.first.id
+		@article.user_id = current_user.id
 		if @article.save
 			flash[:notice] = "Article created successully"
 			redirect_to @article
@@ -29,7 +30,6 @@ class ArticlesController < ApplicationController
 	end
 
 	def update
-		@article = Article.find(params[:id])
 		if @article.update(params.require(:article).permit(:title, :description))
 			flash[:notice] = "Article updated successully"
 			redirect_to article_path(@article)
@@ -39,8 +39,6 @@ class ArticlesController < ApplicationController
 	end
 
 	def destroy
-		puts 'came to destroy'
-		@article = Article.find(params[:id])
 		@article.destroy
 		redirect_to articles_path
 	end
@@ -52,5 +50,16 @@ class ArticlesController < ApplicationController
 		puts "-"*20
 		puts args
 		puts "-"*20
+	end
+
+	def required_same_user
+		if (current_user != @article.user_id && !current_user.admin?)
+			flash[:notice] = "You are not allowed to perform this action"
+			redirect_to articles_path
+		end
+	end
+
+	def set_article
+		@article = Article.find(params[:id])
 	end
 end
