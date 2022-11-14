@@ -6,16 +6,24 @@
    <div class="col-10">
       <%= form_with(model: @article, local: true, data: { turbo: false }) do |f| %>
          <div class="form-group row">
-            <%= f.label :title, class: "col-2 col-form-label text-light" %>
+            <%= f.label :title, class: "col-2 col-form-label text-dark" %>
             <div class="col-10">
                <%= f.text_field :title, class: "form-control shadow rounded", placeholder: "Title of article"%>
             </div>
          </div>
          <br>
          <div class="form-group row">
-            <%= f.label :description, class: "col-2 col-form-label text-light" %>
+            <%= f.label :description, class: "col-2 col-form-label text-dark" %>
             <div class="col-10">
                <%= f.text_area :description, rows: 10, class: "form-control shadow rounded", placeholder: "Description of article" %>
+            </div>
+         </div>
+         <br>
+         <div class="form-group row">
+            <%= f.label :category, class: "col-2 col-form-label text-dark" %>
+            <div class="col-10">
+               <%= f.collection_select(:category_ids, Category.all, :id, :name,
+               {prompt: "Make your selection from the list"}, {multiple: true}) %>
             </div>
          </div>
          <br>
@@ -25,4 +33,6 @@
       <% end %>
    </div>
 </div>
-<%= link_to 'Return to articles listing', articles_path %> 
+<div class="text-center mt-4">
+   <%= link_to 'Return to articles listing', articles_path %> 
+</div>

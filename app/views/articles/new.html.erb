@@ -6,16 +6,25 @@
     <div class="col-10">
       <%= form_with scope: :article, url: articles_path, local: true, data: { turbo: false } do |form| %>
          <div class="form-group row">
-            <%= form.label :title, class: "col-2 col-form-label text-light" %>
+            <%= form.label :title, class: "col-2 col-form-label text-dark" %>
             <div class="col-10">
                <%= form.text_field :title, class: "form-control shadow rounded", placeholder: "Title of article"%>
             </div>
          </div>
          <br>
          <div class="form-group row">
-            <%= form.label :description, class: "col-2 col-form-label text-light" %>
+            <%= form.label :description, class: "col-2 col-form-label text-dark" %>
             <div class="col-10">
                <%= form.text_area :description,rows: 10, class: "form-control shadow rounded", placeholder: "Description of article" %>
+            </div>
+         </div>
+
+         <br>
+         <div class="form-group row">
+            <%= form.label :category, class: "col-2 col-form-label text-dark" %>
+            <div class="col-10">
+               <%= form.collection_select(:category_ids, Category.all, :id, :name,
+               {prompt: "Make your selection from the list"}, {multiple: true}) %>
             </div>
          </div>
 

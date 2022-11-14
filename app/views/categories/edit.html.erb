@@ -1,0 +1,22 @@
+<h1 class="text-center mt-4">Update category</h1>
+
+<div class="row justify-content-center">
+   <div class="col-10">
+      <%= render 'shared/errors', obj: @category %>
+      <%= form_with(model: @category, local: true, data: { turbo: false }) do |f| %>
+         <div class="form-group row">
+            <%= f.label :name, class: "col-2 col-form-label text-light" %>
+            <div class="col-10">
+               <%= f.text_field :name, class: "form-control shadow rounded", placeholder: "Enter name of the category"%>
+            </div>
+         </div>
+         <br>
+         <div class="form-group row justify-content-center">
+            <%= f.submit class: "btn btn-outline-dark btn-lg col-2" %>
+         </div>
+      <% end %>
+   </div>
+</div>
+<div class="text-center mt-4">
+   <%= link_to 'Return to categories listing', categories_path%> 
+</div>
